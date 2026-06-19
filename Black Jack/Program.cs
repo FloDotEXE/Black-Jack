@@ -220,7 +220,7 @@ namespace Black_Jack
             // Spieler-Zug
             while (true)
             {
-                Console.Write("\n  [H]it / [S]tand? ");
+                Console.Write("\n  [H]it / [S]tand / [D]ouble ");
                 string wahl = Console.ReadLine()?.Trim().ToUpper() ?? "";
 
                 if (wahl == "H")
@@ -237,6 +237,26 @@ namespace Black_Jack
                         return;
                     }
                 }
+                 // Double : Nur erlaubt als erster Zug, verdoppelt Einsatz, zieht genau 1 Karte und endet dann !!!!!!!!!!!!!!!!!!!!!
+                 else if (wahl == "D")
+                 {
+                     spieler.KarteHinzufuegen(deck.Ziehen());
+                     Console.WriteLine();
+                     dealer.Anzeigen("Dealer", versteckeZweite: false);
+                     spieler.Anzeigen("Du");
+                     if (spieler.IstUeber21())
+                     {
+                         Console.WriteLine("\n  💥 Bust! Du hast über 21 – Verloren.");
+                         guthaben -= einsatz;
+                         return;
+                     }
+                     else
+                     {
+                        einsatz *= 2;
+                        Console.WriteLine($"  Einsatz verdoppelt auf {einsatz} €.");
+                        break;
+                     }
+                 }
                 else if (wahl == "S")
                 {
                     break;
